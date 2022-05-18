@@ -1,27 +1,44 @@
 import numpy as np
 from sympy import *
 
-# only using A B C
-# all values are float
-def readAll():
-	n = readDimension()
+
+VARS = False
+
+def main():
+	global VARS
+
+	dimension = readDimension()
+	VARS = readVars()
 
 	print('Введите матрицы A, B, C в формате (в примере размерность матрицы 3x3):\n1 2 3\n4 5 6\n7 8 9\n')
 
 	print('\nA:')
-	A = readMatrix(n)
+	A = readMatrix(dimension)
 	print('\nB:')
-	B = readMatrix(n)
+	B = readMatrix(dimension)
 	print('\nC:')
-	C = readMatrix(n)
+	C = readMatrix(dimension)
 	print()
 
 	lamba = symbols(u'λ')
 
 	matrix_lamba = A*lamba**2 + B*lamba + C
 	polynomial = Poly(matrix_lamba.det(), lamba)
+
 	RH = getRHMatrix(polynomial)
-	print(criterionSylvester(RH))
+	solution = criterionSylvester(RH)
+
+	if (VARS):
+		print('Система асимптотически устойчива если:')
+		for sol in solution:
+			print(sol)
+	else:
+		if (solution):
+			print('Система асимптотически устойчива!')
+		else:
+			print('Система не является асимптотически устойчивой!')
+
+	return 0
 
 
 def readDimension():
@@ -35,27 +52,42 @@ def readDimension():
 		return readDimension()
 
 
+def readVars():
+	const_in = input('Будут ли переменные в матрицах A, B, C (y/n):\n')
+	
+	if (const_in == 'y'):
+		return True
+	elif (const_in == 'n'):
+		return False
+	else:
+		print(const_in, 'isn`t "y" or "n"')
+		return readVars()
+
+
 def readMatrix(n):	
 	matrix = Matrix()
 
 	i = 0
 	while (i < n):
-		matrix_str = input()
+		row_str = input()
 
 		try:
-			matrix_str = matrix_str.split()
-			if (len(matrix_str) != n):
-				print('Row lenght ({}) isn`t equal dimension ({})! Please, rewrite row...'.format(len(matrix_str), n))
+			row_str = row_str.split()
+			if (len(row_str) != n):
+				print('Row lenght ({}) isn`t equal dimension ({})! Please, rewrite row...'.format(len(row_str), n))
 				
 				continue
+			tmp = []
+			for r in row_str:
+				tmp.append(parse_expr(r))
 
-			tmp = list(map(int, matrix_str))
 			matrix = matrix.row_insert(i, Matrix([tmp]))
 
 			i += 1
 		except ValueError as err:
-			print(str(err).split()[-1], 'must be INTEGER! Please, rewrite row...')
-
+			print(str(err).split()[-1], 'must be float or variables! Please, rewrite row...')
+		finally:
+			print('UNKNOWN ERROR')
 
 	return matrix
 
@@ -63,6 +95,7 @@ def readMatrix(n):
 def getRHMatrix(polynomial):
 	polynomial_coefs = polynomial.all_coeffs()
 	dimension = degree(polynomial)
+	
 	RH = zeros(dimension, dimension)
 
 	for i in range(dimension):
@@ -78,12 +111,27 @@ def getRHMatrix(polynomial):
 def criterionSylvester(matrix):	
 	dimension = shape(matrix)[0]
 
-	for i in range(dimension):
-		if (matrix[:i, :i].det() <= 0):
-			return False
+	if (VARS):
+		sys_inequalities = []
 
-	return True
+		for i in range(1, dimension + 1):
+			d = matrix[:i, :i].det()
+			variables = Poly(d).free_symbols
+
+			for var in variables:
+				try:
+					sys_inequalities.append(factor(solve(d > 0, var)))
+				except:
+					pass
+
+		return sys_inequalities
+	else:
+		for i in range(1, dimension + 1):
+			if (matrix[:i, :i].det() <= 0):
+				return False
+
+		return True
 
 
 if (__name__ == "__main__"):
-	readAll()
+	main()
