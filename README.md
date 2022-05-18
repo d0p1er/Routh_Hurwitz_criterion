@@ -10,7 +10,7 @@
 
 ## 2. Формулировка критерия
 
-Для полинома <img src="https://latex.codecogs.com/gif.latex? p = a_0 * x^n + a_1 * x^{n-1} + ... + a_n = 0"/> Матрица Рауса-Гурвица:
+Для полинома <img src="https://latex.codecogs.com/gif.latex?%20%20p%20=%20a_0%20*%20x^n%20+%20a_1%20*%20x^{n-1}%20+%20...%20+%20a_n%20=%200"/> Матрица Рауса-Гурвица:
 <img src="https://latex.codecogs.com/png.image?
 RH = 
 \begin{pmatrix}
