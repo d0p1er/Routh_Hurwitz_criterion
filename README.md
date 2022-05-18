@@ -10,21 +10,13 @@
 
 ## 2. Формулировка критерия
 
-Для полинома <img src="https://latex.codecogs.com/gif.latex?%20%20p%20=%20a_0%20*%20x^n%20+%20a_1%20*%20x^{n-1}%20+%20...%20+%20a_n%20=%200"/> Матрица Рауса-Гурвица:
-<img src="https://latex.codecogs.com/png.image?
-RH = 
-\begin{pmatrix}
-  a_{1} & a_{0} & \cdots & 0 \\
-  a_{3} & a_{2} & \cdots & 0 \\
-  \vdots  & \vdots  & \ddots & \vdots  \\
-  0 & 0 & \cdots & a_{n} 
-\end{pmatrix}
-"/>
+Для полинома <img src="https://latex.codecogs.com/png.image?%20%20p%20=%20a_0%20*%20x^n%20+%20a_1%20*%20x^{n-1}%20+%20...%20+%20a_n%20=%200"/> Матрица Рауса-Гурвица:
+<img src="https://latex.codecogs.com/png.image?RH%20=%20%20\begin{pmatrix}%20%20%20a_{1}%20&%20a_{0}%20&%20\cdots%20&%200%20\\%20%20%20a_{3}%20&%20a_{2}%20&%20\cdots%20&%200%20\\%20%20%20\vdots%20%20&%20\vdots%20%20&%20\ddots%20&%20\vdots%20%20\\%20%20%200%20&%200%20&%20\cdots%20&%20a_{n}%20%20\end{pmatrix}"/>
 
 
 Тогда, для того, чтобы система была асимптотически устойчива необходимо и достаточно, чтобы выполнялись соотношения
 
-<img src="https://latex.codecogs.com/png.image? \Delta_1 > 0, \Delta_2 > 0 ... \Delta_n > 0 "/>
+<img src="https://latex.codecogs.com/png.image?%20\Delta_1%20%3E%200,%20\Delta_2%20%3E%200%20...%20\Delta_n%20%3E%200"/>
 
 То есть матрица Рауса-Гурвица должна быть положительно определенной.
 
