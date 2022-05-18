@@ -86,8 +86,6 @@ def readMatrix(n):
 			i += 1
 		except ValueError as err:
 			print(str(err).split()[-1], 'must be float or variables! Please, rewrite row...')
-		finally:
-			print('UNKNOWN ERROR')
 
 	return matrix
 
